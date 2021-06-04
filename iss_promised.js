@@ -6,8 +6,8 @@ const fetchMyIP = function() {
   return request('https://api.ipify.org?format=json');
 };
 const fetchCoordsByIP = function(body) {
-  const ip = JSON.parse(body);
-  return request (`https://freegeoip.app/json/${ip}`)
+  const ip = JSON.parse(body).ip;
+  return request(`https://freegeoip.app/json/${ip}`);
 };
 
 const fetchISSFlyOverTimes = function(body) {
@@ -21,9 +21,10 @@ const nextISSTimesForMyLocation = function() {
     .then(fetchCoordsByIP)
     .then(fetchISSFlyOverTimes)
     .then((data) => {
-      const {response} = JSON.parse(data);
+      const { response } = JSON.parse(data);
       return response;
     });
 };
+
 
 module.exports = {nextISSTimesForMyLocation};
